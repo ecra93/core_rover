@@ -1,5 +1,5 @@
+
 /* www.chrisheydrick.com
-     
    June 23 2012
    CanonicalArduinoRead write a byte to an Arduino, and then
    receives a serially transmitted string in response.
@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
   struct termios toptions;
 
   /* open serial port */
-  fd = open("/dev/ttyACM0", O_RDWR | O_NOCTTY);
+  fd = open("/dev/ttyACM4", O_RDWR | O_NOCTTY);
   printf("fd opened as %i\n", fd);
   
   /* wait for the Arduino to reboot */
@@ -60,6 +60,7 @@ int main(int argc, char *argv[])
   /* Send byte to trigger Arduino to send string back */
   ROS_INFO("cat");
   write(fd, "0", 1);
+  write(fd, "1", 1);
   /* Receive string from Arduino */
   //n = read(fd, buf, 64);
   /* insert terminating zero in the string */
@@ -81,10 +82,18 @@ int main(int argc, char *argv[])
 
   std::cout << "Give input";
   std::getline(std::cin, inputString);
+  //std::cin >> inputString;
+  std::cout << inputString;
+  if(inputString == "exit"){
+     break;
+}
+  ROS_INFO("Test");
+
 	ROS_INFO("dog");
-	write(fd, "0", 1);
+	write(fd,&inputString, 1);
 
   }
-
+  printf("end");
+  close(fd);
   return 0;
 }
