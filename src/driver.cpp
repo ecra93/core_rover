@@ -96,12 +96,18 @@ int main(int argc, char **argv)
   talon1.SetInverted(true);
   talon2.SetInverted(true);
   talon2.SetNeutralMode(Brake);
-  talon5.SetNeutralMode(Coast); 
+  talon5.ConfigFactoryDefault();
+  talon5.SetNeutralMode(Brake); 
   //talon5.Set(ControlMode::Velocity, 500);
  printf("test");
 
   //Configure talons for pid control
   ConfigTalon(&talon5);
+  ConfigTalon(&talon4);
+  ConfigTalon(&talon3);
+  ConfigTalon(&talon2);
+  ConfigTalon(&talon1);
+  ConfigTalon(&talon0);
   printf("test!");
 
   ros::init(argc, argv, "driver", ros::init_options::AnonymousName); // Initialise node
@@ -175,19 +181,19 @@ int main(int argc, char **argv)
       //printf("%f",talon_speed);
    
       //LEFT SIDE
-      talon1.Set(ControlMode::PercentOutput, left);
-      talon2.Set(ControlMode::PercentOutput, left);
-      talon0.Set(ControlMode::PercentOutput, left);
+      talon1.Set(ControlMode::Velocity, 50);
+      talon2.Set(ControlMode::Velocity, 50);
+      talon0.Set(ControlMode::Velocity, 50);
       //RIGHT SIDE
-      talon4.Set(ControlMode::PercentOutput, right);
-      talon5.Set(ControlMode::Position, 300);
-      talon3.Set(ControlMode::PercentOutput, right);
+      talon4.Set(ControlMode::Velocity, 50);
+      talon5.Set(ControlMode::Velocity, 50);
+      talon3.Set(ControlMode::Velocity, 50);
 
       //Output debug information
       if (loopCount >= 10) {
         loopCount = 0;
         //std::cout << "talon5 motor output: " << talon5.GetMotorOutputPercent() << std::endl;
-        std::cout << "talon5 position: " << talon5.GetSelectedSensorPosition() << std::endl;
+        std::cout << "talon5 velocity: " << talon1.GetSelectedSensorVelocity() << std::endl;
       }
 
       //Enable rover with a timeout of 100ms
@@ -213,13 +219,13 @@ void ConfigTalon(TalonSRX* talon) {
 	/* set the peak and nominal outputs */
 	talon->ConfigNominalOutputForward(0, kTimeoutMs);
 	talon->ConfigNominalOutputReverse(0, kTimeoutMs);
-	talon->ConfigPeakOutputForward(0.7, kTimeoutMs);
-	talon->ConfigPeakOutputReverse(-0.7, kTimeoutMs);
+	talon->ConfigPeakOutputForward(0.4, kTimeoutMs);
+	talon->ConfigPeakOutputReverse(-0.4, kTimeoutMs);
 
 	/* set closed loop gains in slot0 */
-	talon->Config_kF(kPIDLoopIdx, 0.0, kTimeoutMs); //0.1097
-	talon->Config_kP(kPIDLoopIdx, 0.22, kTimeoutMs); //0.22
-	talon->Config_kI(kPIDLoopIdx, 0.0, kTimeoutMs);
+	talon->Config_kF(kPIDLoopIdx, 0.1097, kTimeoutMs); //0.1097
+	talon->Config_kP(kPIDLoopIdx, 0.8, kTimeoutMs); //0.22
+	talon->Config_kI(kPIDLoopIdx, 0.02, kTimeoutMs);
 	talon->Config_kD(kPIDLoopIdx, 0.0, kTimeoutMs);
 
 	talon->SetSelectedSensorPosition(0);
