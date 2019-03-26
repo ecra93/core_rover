@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
   struct termios toptions;
 
   /* open serial port */
-  fd = open("/dev/ttyACM1", O_RDWR | O_NOCTTY);
+  fd = open("/dev/ttyACM0", O_RDWR | O_NOCTTY);
   printf("fd opened as %i\n", fd);
   
   /* wait for the Arduino to reboot */
@@ -83,7 +83,7 @@ int main(int argc, char *argv[])
 
   while(true){
 
-  std::cout << "Give input";
+  std::cout << "Give input: ";
   std::getline(std::cin, inputString);
 
   int inputInt;
