@@ -37,16 +37,16 @@
 
 //--*-- Talon SRX includes
 #define Phoenix_No_WPI // remove WPI dependencies
-#include "ctre/Phoenix.h"
-#include "ctre/phoenix/platform/Platform.h"
-#include "ctre/phoenix/unmanaged/Unmanaged.h"
-#include "ctre/phoenix/MotorControl/CAN/WPI_TalonSRX.h"
-#include <string>
-#include <iostream>
-#include <chrono>
-#include <thread>
-#include <SDL2/SDL.h>
-#include <unistd.h>
+//#include "ctre/Phoenix.h"
+//#include "ctre/phoenix/platform/Platform.h"
+//#include "ctre/phoenix/unmanaged/Unmanaged.h"
+//#include "ctre/phoenix/MotorControl/CAN/WPI_TalonSRX.h"
+//#include <string>
+//#include <iostream>
+//#include <chrono>
+//#include <thread>
+//#include <SDL2/SDL.h>
+//#include <unistd.h>
 
 using namespace std;
 
@@ -56,12 +56,12 @@ int steer;
 ros::NodeHandle *n; // Create node handle to talk to ROS
 
 //Declaring and creating talonSRX objects to control the 6 motors. 
-TalonSRX talon1(1); 
-TalonSRX talon2(2);
-TalonSRX talon3(3);
-TalonSRX talon4(4);
-TalonSRX talon5(5);
-TalonSRX talon0(0);
+//TalonSRX talon1(1); 
+//TalonSRX talon2(2);
+//TalonSRX talon3(3);
+//TalonSRX talon4(4);
+//TalonSRX talon5(5);
+//TalonSRX talon0(0);
 
 //--**--..--**--..--**--..--**--..--**--..--**--..--**--..--**--..--**--
 // DriveCmdCb():
@@ -85,13 +85,13 @@ int main(int argc, char **argv)
 {
 
   //Talon SRX Setup
-  std::string interface;
-  interface = "can0";
-  ctre::phoenix::platform::can::SetCANInterface(interface.c_str());
-  talon0.SetInverted(true);
-  talon1.SetInverted(true);
-  talon2.SetInverted(true);
-  talon2.SetNeutralMode(Brake);
+  //std::string interface;
+  //interface = "can0";
+  //ctre::phoenix::platform::can::SetCANInterface(interface.c_str());
+  //talon0.SetInverted(true);
+  //talon1.SetInverted(true);
+  //talon2.SetInverted(true);
+  //talon2.SetNeutralMode(Brake);
   ros::init(argc, argv, "driver", ros::init_options::AnonymousName); // Initialise node
   n = new ros::NodeHandle;
 
@@ -104,7 +104,7 @@ int main(int argc, char **argv)
   bool simulator;
   simulator = false;
 
-	//It's supposed to detect the vehicle but this don't work yet :'(
+  //It's supposed to detect the vehicle but this don't work yet :'(
   string paramKey = "Vehicle";
   n->getParam(paramKey, vehicle);
   if (vehicle == "Simulator"){
@@ -167,16 +167,16 @@ int main(int argc, char **argv)
       //printf("%f",talon_speed);
 
       //LEFT SIDE
-      talon1.Set(ControlMode::PercentOutput, left);
-      talon2.Set(ControlMode::PercentOutput, left);
-      talon0.Set(ControlMode::PercentOutput, left);
+      //talon1.Set(ControlMode::PercentOutput, left);
+      //talon2.Set(ControlMode::PercentOutput, left);
+      //talon0.Set(ControlMode::PercentOutput, left);
       //RIGHT SIDE
-      talon4.Set(ControlMode::PercentOutput, right);
-      talon5.Set(ControlMode::PercentOutput, right);
-      talon3.Set(ControlMode::PercentOutput, right);
+      //talon4.Set(ControlMode::PercentOutput, right);
+      //talon5.Set(ControlMode::PercentOutput, right);
+      //talon3.Set(ControlMode::PercentOutput, right);
 
       //Enable rover with a timeout of 100ms
-      ctre::phoenix::unmanaged::FeedEnable(100);
+      //ctre::phoenix::unmanaged::FeedEnable(100);
     }
 
     ros::spinOnce();   // Messages are received and callbacks called
