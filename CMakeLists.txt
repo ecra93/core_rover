@@ -57,6 +57,14 @@ add_executable(sim_init src/sim_init.cpp)
 add_dependencies(sim_init core_rover_generate_messages_cpp)
 target_link_libraries(sim_init ${catkin_LIBRARIES})
 
+add_executable(goal src/goal.cpp)
+add_dependencies(goal core_rover_generate_messages_cpp)
+target_link_libraries(goal ${catkin_LIBRARIES})
+
+add_executable(navigator src/navigator.cpp)
+add_dependencies(navigator core_rover_generate_messages_cpp)
+target_link_libraries(navigator ${catkin_LIBRARIES})
+
 target_link_libraries(driver ${PROJECT_SOURCE_DIR}/lib/x86-64/libCTRE_Phoenix.a)
 target_link_libraries(driver ${PROJECT_SOURCE_DIR}/lib/x86-64/libCTRE_PhoenixCCI.a)
 target_link_libraries(driver ${PROJECT_SOURCE_DIR}/lib/x86-64/libCTRE_PhoenixPlatformLinuxSocketCan.a)
